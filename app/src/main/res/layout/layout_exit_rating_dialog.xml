@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_rate_exit_dialog_ext">
+
+    <RelativeLayout
+        android:id="@+id/rate_views"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/rate_us_image1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:background="@drawable/background_white"
+            app:srcCompat="@drawable/ic_start_image_dialog1" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/rate_us_image2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toBottomOf="@+id/rate_us_image1"
+            app:layout_constraintEnd_toEndOf="@+id/rate_us_image1"
+            app:layout_constraintStart_toStartOf="@+id/rate_us_image1"
+            app:layout_constraintTop_toTopOf="@+id/rate_us_image1"
+            app:srcCompat="@drawable/ic_like_dialog" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/exit_views"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_exit_title"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/rate_views">
+
+        <TextView
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:gravity="center"
+            android:text="@string/dialog_title"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="#de3b3b"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/ad_container_exit"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_smaller_size"
+        android:gravity="center"
+        android:text="@string/rate_us_desc"
+        android:textColor="@color/white"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:textSize="@dimen/font_size_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exit_views" />
+
+    <RelativeLayout
+        android:id="@+id/rate_exit_views"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_smaller_size"
+        app:layout_constraintBottom_toTopOf="@+id/negative_text"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_desc">
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/rating_bar_value"
+            style="@style/Widget.MaterialRatingBar.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:maxHeight="40dp"
+            android:minHeight="40dp"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/rating_bar_color"
+            android:progressTint="@color/colorPrimaryStar"
+            android:stepSize="1"
+            android:theme="@style/RatingBar"
+            android:visibility="visible"
+            app:mrb_fillBackgroundStars="false" />
+
+        <TextView
+            android:id="@+id/exit_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:minHeight="20dp"
+            android:text="@string/dialog_title"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_primary"
+            android:visibility="gone"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/negative_text"
+        style="@style/TextAppearance.Primary.SingleLine.Maq"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/margin_small_size"
+        android:text="@string/text_thanks"
+        android:background="@drawable/background_negative_button"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:paddingHorizontal="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/positive_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rate_exit_views" />
+
+    <TextView
+        android:id="@+id/positive_text"
+        style="@style/TextAppearance.Primary.SingleLine.Maq"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:text="@string/butn_exit"
+        android:background="@drawable/background_positive_button"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="@+id/negative_text"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/negative_text"
+        app:layout_constraintTop_toTopOf="@+id/negative_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.activity.SpeedometerActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/speedo_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/background_pedo_app_bar"
+            app:layout_constraintBottom_toTopOf="@+id/tabView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/actionBarText"
+            style="@style/TextAppearance.Primary.Big.Dialog.SingleLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_smaller_size"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingHorizontal="@dimen/dp_1"
+            android:text="@string/text_speedo"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/appBar"
+            app:layout_constraintEnd_toStartOf="@+id/speedo_graph"
+            app:layout_constraintStart_toEndOf="@+id/nav_back"
+            app:layout_constraintTop_toTopOf="@+id/appBar" />
+
+        <ImageView
+            android:id="@+id/nav_back"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginStart="@dimen/margin_smaller_size"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/dp_8"
+            app:layout_constraintBottom_toBottomOf="@+id/actionBarText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/actionBarText"
+            app:srcCompat="@drawable/ic_back_white_icon" />
+
+        <!--<ImageView
+            android:id="@+id/premium_services"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/margin_smaller_size"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toBottomOf="@+id/actionBarText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/actionBarText"
+            app:srcCompat="@drawable/ic_shape_704_copy" />-->
+
+        <ImageView
+            android:id="@+id/speedo_graph"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="@dimen/margin_smaller_size"
+            android:contentDescription="@string/app_name"
+            android:padding="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/actionBarText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/actionBarText"
+            app:srcCompat="@drawable/ic_shape_704_copy" />
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/top_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBar"
+            app:tabBackground="@color/colorPrimary"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorGravity="bottom"
+            app:tabIndicatorHeight="2dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextAppearance="@style/tab_text"
+            app:tabTextColor="@color/white_tab" />
+
+        <View
+            android:id="@+id/v12"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorShadowCustom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabView" />
+
+        <View
+            android:id="@+id/start_btn"
+            android:layout_width="130dp"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/background_start_btn"
+            app:layout_constraintBottom_toTopOf="@+id/distance_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
+
+        <TextView
+            android:id="@+id/start_btn_txt"
+            style="@style/TextAppearance.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/text_start_now"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/start_btn"
+            app:layout_constraintEnd_toEndOf="@+id/start_btn"
+            app:layout_constraintStart_toStartOf="@+id/start_btn"
+            app:layout_constraintTop_toTopOf="@+id/start_btn"
+            app:layout_constraintVertical_bias="0.50" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/start_btn_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="start_btn, start_btn_txt" />
+
+        <View
+            android:id="@+id/distance_view"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/ad_container_speedo_map"
+            app:layout_constraintEnd_toStartOf="@+id/v2"
+            app:layout_constraintStart_toEndOf="@+id/v1"
+            app:layout_constraintTop_toBottomOf="@+id/start_btn"
+            app:layout_goneMarginTop="50dp" />
+
+        <ImageView
+            android:id="@+id/icon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_kcal"
+            app:layout_constraintEnd_toEndOf="@+id/distance_view"
+            app:layout_constraintStart_toStartOf="@+id/distance_view"
+            app:layout_constraintTop_toTopOf="@+id/distance_view"
+            app:srcCompat="@drawable/ic_shape_2094_copy_2" />
+
+        <TextView
+            android:id="@+id/distance_value"
+            style="@style/TextAppearance.Primary.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_17"
+            android:fontFamily="@font/roboto_medium"
+            android:text="0"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/icon1"
+            app:layout_constraintStart_toStartOf="@+id/icon1"
+            app:layout_constraintTop_toBottomOf="@+id/icon1" />
+
+        <TextView
+            android:id="@+id/text2"
+            style="@style/TextAppearance.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="@string/text_distance"
+            app:layout_constraintEnd_toEndOf="@+id/icon1"
+            app:layout_constraintStart_toStartOf="@+id/icon1"
+            app:layout_constraintTop_toBottomOf="@+id/distance_value" />
+
+        <View
+            android:id="@+id/time_view"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="@dimen/margin_smaller_size"
+            app:layout_constraintBottom_toBottomOf="@+id/distance_view"
+            app:layout_constraintEnd_toStartOf="@+id/v1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/distance_view" />
+
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_kcal"
+            app:layout_constraintEnd_toEndOf="@+id/time_view"
+            app:layout_constraintStart_toStartOf="@+id/time_view"
+            app:layout_constraintTop_toTopOf="@+id/time_view"
+            app:srcCompat="@drawable/ic_shape_2323_copy" />
+
+        <TextView
+            android:id="@+id/time_values"
+            style="@style/TextAppearance.Primary.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_smaller_size"
+            android:fontFamily="@font/roboto_medium"
+            android:text="00:00"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/icon2"
+            app:layout_constraintStart_toStartOf="@+id/icon2"
+            app:layout_constraintTop_toBottomOf="@+id/icon2" />
+
+        <TextView
+            android:id="@+id/text3"
+            style="@style/TextAppearance.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="@string/text_times"
+            app:layout_constraintEnd_toEndOf="@+id/icon2"
+            app:layout_constraintStart_toStartOf="@+id/icon2"
+            app:layout_constraintTop_toBottomOf="@+id/time_values" />
+
+        <View
+            android:id="@+id/speed_view"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/margin_smaller_size"
+            app:layout_constraintBottom_toBottomOf="@+id/distance_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toEndOf="@+id/v2"
+            app:layout_constraintTop_toTopOf="@+id/distance_view" />
+
+        <ImageView
+            android:id="@+id/icon3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:contentDescription="@string/text_kcal"
+            app:layout_constraintEnd_toEndOf="@+id/speed_view"
+            app:layout_constraintStart_toStartOf="@+id/speed_view"
+            app:layout_constraintTop_toTopOf="@+id/speed_view"
+            app:srcCompat="@drawable/ic_shape_2097_copy" />
+
+        <TextView
+            android:id="@+id/speed_value"
+            style="@style/TextAppearance.Primary.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:fontFamily="@font/roboto_medium"
+            android:text="0"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/icon3"
+            app:layout_constraintStart_toStartOf="@+id/icon3"
+            app:layout_constraintTop_toBottomOf="@+id/icon3" />
+
+        <TextView
+            android:id="@+id/text4"
+            style="@style/TextAppearance.Secondary.SingleLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_13"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:text="@string/avg_speed_graph"
+            app:layout_constraintEnd_toEndOf="@+id/speed_view"
+            app:layout_constraintStart_toStartOf="@+id/speed_view"
+            app:layout_constraintTop_toBottomOf="@+id/speed_value" />
+
+        <View
+            android:id="@+id/v1"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#36000000"
+            app:layout_constraintBottom_toTopOf="@+id/text2"
+            app:layout_constraintEnd_toStartOf="@+id/distance_view"
+            app:layout_constraintStart_toEndOf="@+id/time_view"
+            app:layout_constraintTop_toBottomOf="@+id/icon1" />
+
+        <View
+            android:id="@+id/v2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/color_pedo_view_units_bar"
+            app:layout_constraintBottom_toTopOf="@+id/text2"
+            app:layout_constraintEnd_toStartOf="@+id/distance_view"
+            app:layout_constraintStart_toEndOf="@+id/speed_view"
+            app:layout_constraintTop_toBottomOf="@+id/icon1" />
+
+        <FrameLayout
+            android:id="@+id/ad_container_speedo_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/distance_view">
+
+            <FrameLayout
+                android:id="@+id/ad_container_speedo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_smaller_size"
+                android:layout_marginEnd="@dimen/margin_smaller_size"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pip_mode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/pip_speed"
+            style="@style/TextAppearance.Primary.Bigger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/pip_unit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/pip_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_absolute_size"
+            android:text="@string/km_h"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/pip_speed"
+            app:layout_constraintStart_toStartOf="@id/pip_speed"
+            app:layout_constraintTop_toBottomOf="@+id/pip_speed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

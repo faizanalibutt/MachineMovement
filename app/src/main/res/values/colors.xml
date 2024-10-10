@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5b0ce1</color>
+    <color name="colorPrimaryDark">#6217c1</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="buttonLabel">#FFFFFF</color>
+
+
+    <color name="gray_light">#F5F5F5</color>
+    <color name="gray">#E9E9E9</color>
+    <color name="gray_dark">#C4C4C4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_tab">#B3FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="black_menu">#FF737373</color>
+
+    <color name="black_dark">#FF000000</color>
+    <color name="gray_trans">#6D000000</color>
+    <color name="icon_gray">#A1A1A1</color>
+    <color name="indicator_color">#A21717</color>
+    <color name="main_bottom_nav_txt">#91B7F8</color>
+
+    <color name="stop_btn_color">#DD3729</color>
+
+    <color name="main_screen_bg">#E6EBEE</color>
+    <color name="green">#0FB060</color>
+    <color name="black_gray">#656464</color>
+
+    <color name="main_icon_color">#AB000000</color>
+    <color name="text_main_button_color">#FFFFFF</color>
+    <color name="color_pedo_view_units_bar">#36000000</color>
+    <color name="colorShadowCustom">#20000000</color>
+    <color name="vehicle_view_color">#F3F3F3</color>
+    <color name="colorSelection">#D7D7D7</color>
+    <color name="settings_heading_color">#DE000000</color>
+    <color name="settings_title_color">#2E2E2E</color>
+    <color name="colorPrimaryStar">#ffd800</color>
+    <color name="rating_bar_color">@color/white</color>
+    <color name="dialog_pos_btn_color">#4f09c5</color>
+    <color name="activity_bg">#F1F4F9</color>
+    <color name="icons_default_color">#805F6368</color>
+</resources>

@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/background_app_bar"
+            app:layout_constraintBottom_toTopOf="@+id/card_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.26" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/TextAppearance.Primary.Big.Dialog.SingleLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/margin_smaller_size"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:text="@string/main_bar_title"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/premium_services"
+            app:layout_constraintStart_toEndOf="@+id/nav_menu"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/nav_menu"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/margin_smaller_size"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/dp_5"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:srcCompat="@drawable/menu" />
+
+        <ImageView
+            android:id="@+id/premium_services"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/margin_small_size"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:srcCompat="@drawable/group_1" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="0dp"
+            android:layout_height="290dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="@dimen/dp_12"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="@dimen/dp_2"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/info_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/speedo_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@drawable/background_speedo_button"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="openSpeedo"
+                    app:layout_constraintBottom_toBottomOf="@+id/ver_line"
+                    app:layout_constraintEnd_toStartOf="@+id/ver_line"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.SpeedoRippleEffect
+                    android:id="@+id/speedo_view_effect"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/speedo_view"
+                    app:layout_constraintEnd_toEndOf="@+id/speedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_view"
+                    app:layout_constraintTop_toTopOf="@+id/speedo_view" />
+
+                <com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.SpeedoRippleEffect
+                    android:id="@+id/speedo_view_effect2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/speedo_view"
+                    app:layout_constraintEnd_toEndOf="@+id/speedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_view"
+                    app:layout_constraintTop_toTopOf="@+id/speedo_view" />
+
+                <ImageView
+                    android:id="@+id/speedo_img"
+                    android:layout_width="@dimen/dp_54"
+                    android:layout_height="@dimen/dp_54"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintBottom_toTopOf="@+id/textView31"
+                    app:layout_constraintEnd_toEndOf="@+id/speedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_view"
+                    app:layout_constraintTop_toTopOf="@+id/speedo_view"
+                    app:srcCompat="@drawable/group_236" />
+
+                <Space
+                    android:id="@+id/ripple_pivot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constrainedHeight="false"
+                    app:layout_constrainedWidth="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/speedo_img"
+                    app:layout_constraintEnd_toEndOf="@+id/speedo_img"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_img"
+                    app:layout_constraintTop_toTopOf="@+id/speedo_img" />
+
+                <TextView
+                    android:id="@+id/textView31"
+                    style="@style/TextAppearance.Primary.SingleLine.Maq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest_size"
+                    android:fontFamily="@font/roboto_bold"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/text_speedo"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/speedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_view"
+                    app:layout_constraintTop_toBottomOf="@+id/speedo_img" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_28"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@drawable/background_step_button"
+                    android:paddingStart="@dimen/dp_8"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/text_start"
+                    app:layout_constraintBottom_toBottomOf="@+id/speedo_view"
+                    app:layout_constraintEnd_toEndOf="@+id/speedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_view"
+                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+                <View
+                    android:id="@+id/hori_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:background="#ebebeb"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.60" />
+
+                <View
+                    android:id="@+id/ver_line"
+                    android:layout_width="0.5dp"
+                    android:layout_height="0dp"
+                    android:background="#ebebeb"
+                    app:layout_constraintBottom_toTopOf="@+id/hori_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/pedo_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/background_pedo_button"
+                    android:onClick="openPedoMeter"
+                    app:layout_constraintBottom_toBottomOf="@+id/ver_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ver_line"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/face"
+                    android:layout_width="@dimen/dp_54"
+                    android:layout_height="@dimen/dp_54"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintEnd_toEndOf="@+id/pedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/pedo_view"
+                    app:layout_constraintTop_toTopOf="@+id/pedo_view"
+                    app:srcCompat="@drawable/group_23" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/TextAppearance.Primary.SingleLine.Maq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest_size"
+                    android:fontFamily="@font/roboto_bold"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/text_pedometer"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/pedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/pedo_view"
+                    app:layout_constraintTop_toBottomOf="@+id/face" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_28"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@drawable/background_step_button"
+                    android:paddingStart="@dimen/dp_8"
+                    android:paddingEnd="@dimen/dp_8"
+                    android:text="@string/text_start"
+                    app:layout_constraintBottom_toBottomOf="@+id/pedo_view"
+                    app:layout_constraintEnd_toEndOf="@+id/pedo_view"
+                    app:layout_constraintStart_toStartOf="@+id/pedo_view"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/text_step"
+                    style="@style/TextAppearance.Primary.SingleLine.Maq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_12"
+                    android:paddingEnd="@dimen/dp_12"
+                    android:text="@string/text_start"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/pedo_view"
+                    app:layout_constraintEnd_toEndOf="@+id/view3"
+                    app:layout_constraintStart_toStartOf="@+id/view3"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/text_speedo"
+                    style="@style/TextAppearance.Primary.SingleLine.Maq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_12"
+                    android:paddingEnd="@dimen/dp_12"
+                    android:text="@string/text_start"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/speedo_view"
+                    app:layout_constraintEnd_toEndOf="@+id/view"
+                    app:layout_constraintStart_toStartOf="@+id/view"
+                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+                <View
+                    android:id="@+id/action_settings"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_marginTop="@dimen/margin_smaller_size"
+                    android:paddingHorizontal="2dp"
+                    app:layout_constraintEnd_toStartOf="@+id/action_rate_us"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_view"
+                    app:layout_constraintTop_toBottomOf="@+id/hori_line" />
+
+                <View
+                    android:id="@+id/action_settings1"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:background="@drawable/background_settings"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_settings"
+                    app:layout_constraintEnd_toEndOf="@+id/action_settings"
+                    app:layout_constraintStart_toStartOf="@+id/action_settings"
+                    app:layout_constraintTop_toTopOf="@+id/action_settings" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:contentDescription="@string/text_rate"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_settings1"
+                    app:layout_constraintEnd_toEndOf="@+id/action_settings1"
+                    app:layout_constraintStart_toStartOf="@+id/action_settings1"
+                    app:layout_constraintTop_toTopOf="@+id/action_settings1"
+                    app:srcCompat="@drawable/shape_565_copy_2" />
+
+                <TextView
+                    android:id="@+id/settings"
+                    style="@style/TextAppearance.Secondary.SingleLine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest_size"
+                    android:paddingHorizontal="2dp"
+                    android:text="@string/text_settings"
+                    app:layout_constraintEnd_toStartOf="@+id/rate_us"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toStartOf="@+id/speedo_view"
+                    app:layout_constraintTop_toBottomOf="@+id/action_settings" />
+
+                <View
+                    android:id="@+id/action_rate_us"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_marginTop="@dimen/margin_smaller_size"
+                    android:paddingHorizontal="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_settings"
+                    app:layout_constraintEnd_toStartOf="@+id/action_share"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toEndOf="@+id/action_settings"
+                    app:layout_constraintTop_toBottomOf="@+id/hori_line" />
+
+                <View
+                    android:id="@+id/action_rate_us1"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:background="@drawable/background_rate_us"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_rate_us"
+                    app:layout_constraintEnd_toEndOf="@+id/action_rate_us"
+                    app:layout_constraintStart_toStartOf="@+id/action_rate_us"
+                    app:layout_constraintTop_toTopOf="@+id/action_rate_us" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_rate_us1"
+                    app:layout_constraintEnd_toEndOf="@+id/action_rate_us1"
+                    app:layout_constraintStart_toStartOf="@+id/action_rate_us1"
+                    app:layout_constraintTop_toTopOf="@+id/action_rate_us1"
+                    app:srcCompat="@drawable/shape_798_copy_2" />
+
+                <TextView
+                    android:id="@+id/rate_us"
+                    style="@style/TextAppearance.Secondary.SingleLine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest_size"
+                    android:paddingHorizontal="2dp"
+                    android:text="@string/text_rate_us"
+                    app:layout_constraintEnd_toStartOf="@+id/share"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toEndOf="@+id/settings"
+                    app:layout_constraintTop_toBottomOf="@+id/action_rate_us" />
+
+                <View
+                    android:id="@+id/action_share"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_marginTop="@dimen/margin_smaller_size"
+                    android:paddingHorizontal="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_settings"
+                    app:layout_constraintEnd_toStartOf="@+id/action_pro"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toEndOf="@+id/action_rate_us"
+                    app:layout_constraintTop_toBottomOf="@+id/hori_line" />
+
+                <View
+                    android:id="@+id/action_share1"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:background="@drawable/background_share"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_share"
+                    app:layout_constraintEnd_toEndOf="@+id/action_share"
+                    app:layout_constraintStart_toStartOf="@+id/action_share"
+                    app:layout_constraintTop_toTopOf="@+id/action_share" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_share1"
+                    app:layout_constraintEnd_toEndOf="@+id/action_share1"
+                    app:layout_constraintStart_toStartOf="@+id/action_share1"
+                    app:layout_constraintTop_toTopOf="@+id/action_share1"
+                    app:srcCompat="@drawable/shape_797_copy" />
+
+                <TextView
+                    android:id="@+id/share"
+                    style="@style/TextAppearance.Secondary.SingleLine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest_size"
+                    android:paddingHorizontal="2dp"
+                    android:text="@string/text_share"
+                    app:layout_constraintEnd_toStartOf="@+id/premium"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toEndOf="@+id/rate_us"
+                    app:layout_constraintTop_toBottomOf="@+id/action_share" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/nav_pro_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="action_pro1, action_pro, pro_img, premium" />
+
+                <View
+                    android:id="@+id/action_pro"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_marginTop="@dimen/margin_smaller_size"
+                    android:paddingHorizontal="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_settings"
+                    app:layout_constraintEnd_toEndOf="@+id/pedo_view"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toEndOf="@+id/action_share"
+                    app:layout_constraintTop_toBottomOf="@+id/hori_line" />
+
+                <View
+                    android:id="@+id/action_pro1"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_marginEnd="@dimen/margin_standard_size"
+                    android:background="@drawable/background_pro"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_pro"
+                    app:layout_constraintEnd_toEndOf="@+id/action_pro"
+                    app:layout_constraintStart_toStartOf="@+id/action_pro"
+                    app:layout_constraintTop_toTopOf="@+id/action_pro" />
+
+                <ImageView
+                    android:id="@+id/pro_img"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/action_pro1"
+                    app:layout_constraintEnd_toEndOf="@+id/action_pro1"
+                    app:layout_constraintStart_toStartOf="@+id/action_pro1"
+                    app:layout_constraintTop_toTopOf="@+id/action_pro1"
+                    app:srcCompat="@drawable/crown_1_copy_6" />
+
+                <TextView
+                    android:id="@+id/premium"
+                    style="@style/TextAppearance.Secondary.SingleLine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest_size"
+                    android:paddingHorizontal="2dp"
+                    android:text="@string/text_pro"
+                    app:layout_constraintEnd_toEndOf="@+id/pedo_view"
+                    app:layout_constraintHorizontal_weight=".2"
+                    app:layout_constraintStart_toEndOf="@+id/share"
+                    app:layout_constraintTop_toBottomOf="@+id/action_pro" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ad_container_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_smaller_size"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/margin_smaller_size"
+            android:layout_marginBottom="@dimen/margin_smaller_size"
+            android:visibility="visible"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="@dimen/dp_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:0.9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

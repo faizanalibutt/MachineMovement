@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/background_rate_exit_dialog_ext"
+    android:insetLeft="@dimen/margin_small_size"
+    android:insetTop="@dimen/margin_small_size"
+    android:insetRight="@dimen/margin_small_size"
+    android:insetBottom="@dimen/margin_small_size" />

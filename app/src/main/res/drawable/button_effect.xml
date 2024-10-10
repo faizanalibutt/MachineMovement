@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <!--  <item android:drawable="@color/green" android:state_focused="true" android:state_pressed="true" />
+    <item android:drawable="@color/gray_dark" android:state_focused="false" android:state_pressed="true" />
+    <item android:drawable="@color/colorPrimary" />-->
+
+
+    <item android:drawable="@drawable/selected_bg"  android:state_checked="true"  />
+    <item android:drawable="@color/white"  android:state_checked="false" />
+    <item android:drawable="@drawable/non_selected_bg" />
+
+</selector>

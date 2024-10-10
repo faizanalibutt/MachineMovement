@@ -1,0 +1,302 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:eaze="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.eazegraph.lib.charts.PieChart
+        android:id="@+id/pedo_process_graph"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="@dimen/margin_smallest_size"
+        android:visibility="visible"
+        eaze:egHighlightStrength="1"
+        eaze:egInnerPadding="75"
+        eaze:egLegendHeight="0dp"
+        eaze:layout_constraintBottom_toTopOf="@+id/start_btn"
+        eaze:layout_constraintEnd_toEndOf="parent"
+        eaze:layout_constraintStart_toStartOf="parent"
+        eaze:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/steps"
+        style="@style/TextAppearance.Primary.Big.Splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2678"
+        eaze:layout_constraintBottom_toBottomOf="@id/pedo_process_graph"
+        eaze:layout_constraintEnd_toEndOf="@+id/pedo_process_graph"
+        eaze:layout_constraintStart_toStartOf="@+id/pedo_process_graph"
+        eaze:layout_constraintTop_toTopOf="@id/pedo_process_graph" />
+
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_smallest_size"
+        android:text="@string/text_steps"
+        eaze:layout_constraintEnd_toEndOf="@+id/steps"
+        eaze:layout_constraintStart_toStartOf="@id/steps"
+        eaze:layout_constraintTop_toBottomOf="@+id/steps" />
+
+    <View
+        android:id="@+id/start_btn"
+        android:layout_width="130dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/margin_standard_size"
+        android:background="@drawable/background_start_btn"
+        eaze:layout_constraintBottom_toTopOf="@+id/kal_view"
+        eaze:layout_constraintEnd_toEndOf="parent"
+        eaze:layout_constraintStart_toStartOf="parent"
+        eaze:layout_constraintTop_toBottomOf="@+id/pedo_process_graph" />
+
+    <TextView
+        android:id="@+id/step_btn_txt"
+        style="@style/TextAppearance.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_resume"
+        android:textColor="@color/white"
+        eaze:layout_constraintBottom_toBottomOf="@+id/start_btn"
+        eaze:layout_constraintEnd_toEndOf="@+id/start_btn"
+        eaze:layout_constraintHorizontal_bias="0.70"
+        eaze:layout_constraintStart_toStartOf="@+id/start_btn"
+        eaze:layout_constraintTop_toTopOf="@+id/start_btn"
+        eaze:layout_constraintVertical_bias="0.50" />
+
+    <ImageView
+        android:id="@+id/step_btn_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/text_resume"
+        eaze:layout_constraintBottom_toBottomOf="@+id/start_btn"
+        eaze:layout_constraintEnd_toStartOf="@+id/step_btn_txt"
+        eaze:layout_constraintHorizontal_bias="0.6"
+        eaze:layout_constraintStart_toStartOf="@+id/start_btn"
+        eaze:layout_constraintTop_toTopOf="@+id/start_btn"
+        eaze:srcCompat="@drawable/ic_shape_569" />
+
+    <View
+        android:id="@+id/kal_view"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/margin_standard_size"
+        eaze:layout_constraintBottom_toTopOf="@+id/ad_container"
+        eaze:layout_constraintEnd_toStartOf="@+id/v2"
+        eaze:layout_constraintStart_toEndOf="@+id/v1"
+        eaze:layout_constraintTop_toBottomOf="@+id/start_btn" />
+
+    <ImageView
+        android:id="@+id/icon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/text_kcal"
+        eaze:layout_constraintEnd_toEndOf="@+id/kal_view"
+        eaze:layout_constraintStart_toStartOf="@+id/kal_view"
+        eaze:layout_constraintTop_toTopOf="@+id/kal_view"
+        eaze:srcCompat="@drawable/ic_shape_567_copy" />
+
+    <TextView
+        android:id="@+id/kal_value"
+        style="@style/TextAppearance.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_smaller_size"
+        android:text="200"
+        eaze:layout_constraintEnd_toEndOf="@+id/icon1"
+        eaze:layout_constraintStart_toStartOf="@+id/icon1"
+        eaze:layout_constraintTop_toBottomOf="@+id/icon1" />
+
+    <TextView
+        android:id="@+id/text2"
+        style="@style/TextAppearance.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:text="@string/text_kcal"
+        eaze:layout_constraintEnd_toEndOf="@+id/icon1"
+        eaze:layout_constraintStart_toStartOf="@+id/icon1"
+        eaze:layout_constraintTop_toBottomOf="@+id/kal_value" />
+
+    <View
+        android:id="@+id/time_view"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="@dimen/margin_smaller_size"
+        eaze:layout_constraintBottom_toBottomOf="@+id/kal_view"
+        eaze:layout_constraintEnd_toStartOf="@+id/v1"
+        eaze:layout_constraintStart_toStartOf="parent"
+        eaze:layout_constraintTop_toTopOf="@+id/kal_view" />
+
+    <ImageView
+        android:id="@+id/icon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/text_kcal"
+        eaze:layout_constraintEnd_toEndOf="@+id/time_view"
+        eaze:layout_constraintStart_toStartOf="@+id/time_view"
+        eaze:layout_constraintTop_toTopOf="@+id/time_view"
+        eaze:srcCompat="@drawable/ic_shape_566_copy" />
+
+    <TextView
+        android:id="@+id/time_value"
+        style="@style/TextAppearance.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_smaller_size"
+        android:text="2:45"
+        eaze:layout_constraintEnd_toEndOf="@+id/icon2"
+        eaze:layout_constraintStart_toStartOf="@+id/icon2"
+        eaze:layout_constraintTop_toBottomOf="@+id/icon2" />
+
+    <TextView
+        android:id="@+id/text3"
+        style="@style/TextAppearance.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:text="@string/text_time"
+        eaze:layout_constraintEnd_toEndOf="@+id/icon2"
+        eaze:layout_constraintStart_toStartOf="@+id/icon2"
+        eaze:layout_constraintTop_toBottomOf="@+id/time_value" />
+
+    <View
+        android:id="@+id/distance_view"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/margin_smaller_size"
+        eaze:layout_constraintBottom_toBottomOf="@+id/kal_view"
+        eaze:layout_constraintEnd_toEndOf="parent"
+        eaze:layout_constraintHorizontal_bias="0.6"
+        eaze:layout_constraintStart_toEndOf="@+id/v2"
+        eaze:layout_constraintTop_toTopOf="@+id/kal_view" />
+
+    <ImageView
+        android:id="@+id/icon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/text_kcal"
+        eaze:layout_constraintEnd_toEndOf="@+id/distance_view"
+        eaze:layout_constraintStart_toStartOf="@+id/distance_view"
+        eaze:layout_constraintTop_toTopOf="@+id/distance_view"
+        eaze:srcCompat="@drawable/ic_shape_568_copy" />
+
+    <TextView
+        android:id="@+id/distance_value"
+        style="@style/TextAppearance.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_smaller_size"
+        android:text="3.18"
+        eaze:layout_constraintEnd_toEndOf="@+id/icon3"
+        eaze:layout_constraintStart_toStartOf="@+id/icon3"
+        eaze:layout_constraintTop_toBottomOf="@+id/icon3" />
+
+    <TextView
+        android:id="@+id/text4"
+        style="@style/TextAppearance.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:text="@string/text_miles"
+        eaze:layout_constraintEnd_toEndOf="@+id/icon3"
+        eaze:layout_constraintStart_toStartOf="@+id/icon3"
+        eaze:layout_constraintTop_toBottomOf="@+id/distance_value" />
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/margin_smaller_size"
+        android:background="#36000000"
+        eaze:layout_constraintBottom_toTopOf="@+id/text2"
+        eaze:layout_constraintEnd_toStartOf="@+id/kal_view"
+        eaze:layout_constraintStart_toEndOf="@+id/time_value"
+        eaze:layout_constraintTop_toBottomOf="@+id/icon1" />
+
+    <View
+        android:id="@+id/v2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/color_pedo_view_units_bar"
+        eaze:layout_constraintBottom_toTopOf="@+id/text2"
+        eaze:layout_constraintEnd_toStartOf="@+id/kal_view"
+        eaze:layout_constraintStart_toEndOf="@+id/distance_view"
+        eaze:layout_constraintTop_toBottomOf="@+id/icon1" />
+
+    <FrameLayout
+        android:id="@+id/ad_container"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        eaze:layout_constraintBottom_toBottomOf="parent"
+        eaze:layout_constraintEnd_toEndOf="parent"
+        eaze:layout_constraintStart_toStartOf="parent"
+        eaze:layout_constraintTop_toBottomOf="@+id/kal_view" />
+
+    <LinearLayout
+        android:id="@+id/averageandtotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pedo_process_graph"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/totalMiles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/averageandtotaltext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/averageandtotal"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/text_miles" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/total" />
+    </LinearLayout>
+
+    <org.eazegraph.lib.charts.BarChart
+        android:id="@+id/bargraph"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/averageandtotaltext"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"
+        eaze:egLegendHeight="35dp"
+        eaze:egShowValues="true"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

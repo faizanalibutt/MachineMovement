@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/m_km"
+        android:title="@string/km_h_c" />
+
+    <item
+        android:id="@+id/m_mph"
+        android:title="@string/mph_c" />
+
+    <item
+        android:id="@+id/m_knot"
+        android:title="@string/knot_c" />
+
+</menu>

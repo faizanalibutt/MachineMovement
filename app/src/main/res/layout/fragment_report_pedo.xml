@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    tools:context="com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.fragment.ReportFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/activity_bg">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ad_container_pedo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="@dimen/margin_smaller_size"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/dataView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dataView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ad_container_pedo">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/graphView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/activity_bg"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/average_value"
+                    style="@style/TextAppearance.Primary.Bigger.SingleLine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium_size"
+                    android:layout_marginTop="@dimen/margin_smallest_size"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:text="00"
+                    android:textColor="@color/settings_heading_color"
+                    android:textSize="28sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_average"
+                    style="@style/TextAppearance.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_standard_size"
+                    android:text="@string/text_average"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/average_value"
+                    app:layout_constraintStart_toStartOf="@+id/average_value"
+                    app:layout_constraintTop_toBottomOf="@+id/average_value" />
+
+                <TextView
+                    android:id="@+id/total_value"
+                    style="@style/TextAppearance.Primary.Bigger.SingleLine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_medium_size"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:text="00"
+                    android:textColor="@color/settings_heading_color"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/average_value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline6"
+                    app:layout_constraintTop_toTopOf="@+id/average_value" />
+
+                <TextView
+                    android:id="@+id/text_total"
+                    style="@style/TextAppearance.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_total"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_average"
+                    app:layout_constraintEnd_toEndOf="@+id/total_value"
+                    app:layout_constraintStart_toStartOf="@+id/total_value"
+                    app:layout_constraintTop_toTopOf="@+id/text_average" />
+
+                <org.eazegraph.lib.charts.BarChart
+                    android:id="@+id/bargraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="@dimen/margin_medium_size"
+                    android:visibility="gone"
+                    app:egLegendHeight="35dp"
+                    app:egShowValues="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_average" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/bargraph1"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@+id/chipGroup"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_average" />
+
+                <RadioGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginTop="@dimen/margin_standard_size"
+                    android:layout_marginBottom="@dimen/margin_standard_size"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    app:chipSpacingHorizontal="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bargraph1"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/step_graph"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".3"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="true"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="center"
+                        android:text="@string/text_step"
+                        android:textColor="@color/white"
+                        android:textColorHighlight="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/distance_graph"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight=".3"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@string/text_distance"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/time_graph"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".3"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@string/text_times"
+                        android:textColor="@color/black"
+                        android:textColorHighlight="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                </RadioGroup>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/emptyData"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="@color/activity_bg"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_view"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:lottie_fileName="no_data_found.json"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_speed="2"
+                    app:lottie_loop="true" />
+
+                <TextView
+                    android:id="@+id/emptyData1"
+                    style="@style/TextAppearance.Primary.Big"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_below="@+id/animation_view"
+                    android:gravity="center|bottom"
+                    android:layout_marginBottom="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/animation_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/no_data_found"
+                    android:textColor="@color/gray_trans" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

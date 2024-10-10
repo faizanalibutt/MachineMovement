@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/vehicle_view"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="@dimen/margin_xmedium_size"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/margin_xmedium_size"
+        android:background="@drawable/background_vehicle_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_guideline" />
+
+    <ImageView
+        android:id="@+id/cycle_view"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/text_speedo"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicle_view"
+        app:layout_constraintEnd_toStartOf="@+id/v11"
+        app:layout_constraintStart_toStartOf="@+id/vehicle_view"
+        app:layout_constraintTop_toTopOf="@+id/vehicle_view"
+        app:srcCompat="@drawable/ic_shape_1940_copy"
+        app:tint="@color/text_color_chip_state" />
+
+    <ImageView
+        android:id="@+id/car_view"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/text_speedo"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicle_view"
+        app:layout_constraintEnd_toStartOf="@+id/v12"
+        app:layout_constraintStart_toEndOf="@+id/v11"
+        app:layout_constraintTop_toTopOf="@+id/vehicle_view"
+        app:srcCompat="@drawable/ic_shape_1941_copy_2" />
+
+    <ImageView
+        android:id="@+id/train_view"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/text_speedo"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicle_view"
+        app:layout_constraintEnd_toEndOf="@+id/vehicle_view"
+        app:layout_constraintStart_toEndOf="@+id/v12"
+        app:layout_constraintTop_toTopOf="@+id/vehicle_view"
+        app:srcCompat="@drawable/ic_shape_1942_copy_2" />
+
+    <View
+        android:id="@+id/v11"
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        android:background="#36000000"
+        app:layout_constraintBottom_toBottomOf="@+id/car_view"
+        app:layout_constraintEnd_toStartOf="@+id/car_view"
+        app:layout_constraintStart_toEndOf="@+id/cycle_view"
+        app:layout_constraintTop_toTopOf="@+id/car_view" />
+
+    <View
+        android:id="@+id/v12"
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        android:background="@color/color_pedo_view_units_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/car_view"
+        app:layout_constraintEnd_toStartOf="@+id/train_view"
+        app:layout_constraintStart_toEndOf="@+id/car_view"
+        app:layout_constraintTop_toTopOf="@+id/car_view" />
+
+    <View
+        android:id="@+id/popup_units"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/dp_18"
+        android:background="@drawable/background_popup_units"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_view" />
+
+    <ImageView
+        android:id="@+id/img_1"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:contentDescription="@string/kmh"
+        android:layout_marginEnd="@dimen/dp_8"
+        app:layout_constraintBottom_toBottomOf="@+id/popup_units"
+        app:layout_constraintEnd_toEndOf="@+id/popup_units"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/units_text"
+        app:layout_constraintTop_toTopOf="@id/popup_units"
+        app:srcCompat="@drawable/ic_shape_10_copy" />
+
+    <TextView
+        android:id="@+id/units_text"
+        style="@style/TextAppearance.Primary.SingleLine.Maq"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/km_h_c"
+        android:paddingHorizontal="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="@+id/popup_units"
+        app:layout_constraintEnd_toStartOf="@+id/img_1"
+        app:layout_constraintStart_toStartOf="@+id/popup_units"
+        app:layout_constraintTop_toTopOf="@id/popup_units" />
+
+    <View
+        android:id="@+id/tempView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+        app:layout_constraintDimensionRatio="V, 1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_view" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/speedometer_view_img"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/tempView"
+        app:layout_constraintEnd_toEndOf="@+id/tempView"
+        app:layout_constraintStart_toStartOf="@+id/tempView"
+        app:layout_constraintTop_toTopOf="@+id/tempView"
+        app:srcCompat="@drawable/ic_car_kmph" />
+
+    <com.github.lzyzsd.circleprogress.ArcProgress
+        android:id="@+id/speedometer_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:arc_angle="260"
+        app:arc_bottom_text="@null"
+        app:arc_finished_color="@color/colorPrimary"
+        app:arc_progress="0"
+        app:arc_suffix_text_size="0sp"
+        app:arc_text_color="@color/black_dark"
+        app:arc_text_size="38sp"
+        android:layout_margin="50dp"
+        app:arc_unfinished_color="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+        app:layout_constraintDimensionRatio="V, 1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_view" />
+
+    <TextView
+        android:id="@+id/digi_type_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/KMH"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/speedometer_view_img"
+        app:layout_constraintEnd_toEndOf="@+id/speedometer_view_img"
+        app:layout_constraintStart_toStartOf="@+id/speedometer_view_img"
+        app:layout_constraintTop_toTopOf="@+id/speedometer_view_img"
+        app:layout_constraintVertical_bias="0.65" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

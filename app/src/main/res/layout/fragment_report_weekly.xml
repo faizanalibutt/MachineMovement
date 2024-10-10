@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F4F1"
+    tools:context="com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.fragment.ReportFragment">
+
+    <TextView
+        android:id="@+id/average_value"
+        style="@style/TextAppearance.Primary.Bigger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium_size"
+        android:layout_marginTop="@dimen/margin_medium_size"
+        android:text="768"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_average"
+        style="@style/TextAppearance.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_average"
+        app:layout_constraintEnd_toEndOf="@+id/average_value"
+        app:layout_constraintStart_toStartOf="@+id/average_value"
+        app:layout_constraintTop_toBottomOf="@+id/average_value" />
+
+    <TextView
+        android:id="@+id/total_value"
+        style="@style/TextAppearance.Primary.Bigger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium_size"
+        android:text="1348"
+        app:layout_constraintBottom_toBottomOf="@+id/average_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/average_value" />
+
+    <TextView
+        android:id="@+id/text_total"
+        style="@style/TextAppearance.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_total"
+        app:layout_constraintBottom_toBottomOf="@+id/text_average"
+        app:layout_constraintEnd_toEndOf="@+id/total_value"
+        app:layout_constraintStart_toStartOf="@+id/total_value"
+        app:layout_constraintTop_toTopOf="@+id/text_average" />
+
+
+    <org.eazegraph.lib.charts.BarChart
+        android:id="@+id/bargraph"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/margin_medium_size"
+        android:visibility="visible"
+        app:egLegendHeight="35dp"
+        app:egShowValues="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_average" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_xmedium_size"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bargraph">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_smaller_size"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/unknown_dp"
+            android:paddingEnd="@dimen/margin_small_size"
+            app:chipSpacingHorizontal="@dimen/margin_medium_size"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/time_graph"
+                style="@style/Widget.MaterialComponents.Chip.Choice.ChipStyle"
+                android:text="@string/text_times" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/distance_graph"
+                style="@style/Widget.MaterialComponents.Chip.Choice.ChipStyle"
+                android:text="@string/text_distance" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/speed_graph"
+                style="@style/Widget.MaterialComponents.Chip.Choice.ChipStyle"
+                android:text="@string/avg_speed_graph" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
