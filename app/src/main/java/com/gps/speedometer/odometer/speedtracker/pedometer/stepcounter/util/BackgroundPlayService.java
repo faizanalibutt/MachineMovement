@@ -1,11 +1,7 @@
 package com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.location.Location;
 import android.os.IBinder;
@@ -15,24 +11,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleService;
-import androidx.lifecycle.Observer;
 
-import com.github.anastr.speedviewlib.Speedometer;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.R;
-import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.callback.Callback;
-import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.model.Speedo;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.activity.PedometerActivity;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.activity.SpeedometerActivity;
-
-import java.security.Permission;
-
-import timber.log.Timber;
 
 public class BackgroundPlayService extends LifecycleService implements CurrentLocationOverlay.LocationResultListener {
 
@@ -44,7 +30,7 @@ public class BackgroundPlayService extends LifecycleService implements CurrentLo
     @Override
     public void onCreate() {
         super.onCreate();
-        Timber.e("service started");
+        Log.e("service","service started");
     }
 
 
@@ -54,7 +40,7 @@ public class BackgroundPlayService extends LifecycleService implements CurrentLo
         if (intent_type.equals("pedo")) {
 
             mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget_pedo, null);
-            Timber.e("view inflated Pedo");
+            Log.e("service","view inflated Pedo");
             //Add the view to the window.
             final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                     WindowManager.LayoutParams.WRAP_CONTENT,
@@ -146,7 +132,7 @@ public class BackgroundPlayService extends LifecycleService implements CurrentLo
 
         } else {
             mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget_speedo, null);
-            Timber.e("view inflated Speedo");
+            Log.e("service","view inflated Speedo");
 
             //Add the view to the window.
             final WindowManager.LayoutParams params = new WindowManager.LayoutParams(

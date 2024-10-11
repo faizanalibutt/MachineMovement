@@ -28,6 +28,7 @@ import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.model.Dis
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Logger;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Util;
 
+import org.eazegraph.lib.BuildConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

@@ -40,9 +40,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.dev.bytes.adsmanager.ADUnitPlacements;
-import com.dev.bytes.adsmanager.NativeAdsManagerKt;
-import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.BuildConfig;
+
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.Database;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.R;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.SensorListener;
@@ -51,9 +49,8 @@ import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.AppU
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Logger;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.TimeUtils;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Util;
-import com.natasa.progressviews.CircleSegmentBar;
-import com.natasa.progressviews.utils.ProgressStartPoint;
 
+import org.eazegraph.lib.BuildConfig;
 import org.eazegraph.lib.models.PieModel;
 
 import java.text.NumberFormat;
@@ -70,7 +67,6 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
     ImageView step_btn_img;
     TextView step_btn_txt, timeValue;
     private View mView;
-    private CircleSegmentBar segmentBar;
     private String pedoState;
 
     private int todayOffset, total_start, goal, since_boot, total_days;
@@ -79,10 +75,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
 //    SpeedViewModel mViewModel = null;
 
     private void initSegmentProgressBar() {
-        segmentBar = mView.findViewById(R.id.pedo_process_graph1);
-        segmentBar.setCircleViewPadding(1);
-        segmentBar.setSegmentWidth(1);
-        segmentBar.setStartPositionInDegrees(ProgressStartPoint.BOTTOM);
+
     }
 
     @Override
@@ -120,8 +113,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
                 startService(v, true);
                 setUpListener(true);
                 startPedometer();
-                if (getActivity() instanceof PedometerActivity)
-                    ((PedometerActivity) getActivity()).showStartStopInter();
+
 
                 step_btn_txt.setText(v.getContext().getString(R.string.text_stop));
                 step_btn_img.setVisibility(View.GONE);
@@ -136,8 +128,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
 
                 startService(v, false);
                 setUpListener(false);
-                if (getActivity() instanceof PedometerActivity)
-                    ((PedometerActivity) getActivity()).showStartStopInter();
+
 
                 step_btn_txt.setText(v.getContext().getString(R.string.text_resume));
                 step_btn_img.setVisibility(View.VISIBLE);
@@ -153,8 +144,6 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
                 startService(v, true);
                 setUpListener(true);
                 startPedometer();
-                if (getActivity() instanceof PedometerActivity)
-                    ((PedometerActivity) getActivity()).showStartStopInter();
 
                 step_btn_txt.setText(v.getContext().getString(R.string.text_stop));
                 step_btn_img.setVisibility(View.GONE);
@@ -201,10 +190,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
 
         isStepSensorAvailable();
         FrameLayout ad_container = view.findViewById(R.id.ad_container_pedo);
-        NativeAdsManagerKt.loadNativeAd(view.getContext(), ad_container,
-                R.layout.ad_unified_common,
-                ADUnitPlacements.COMMON_NATIVE_AD, true, null,
-                null, null, null);
+
     }
 
     @Override
@@ -289,7 +275,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
                         (SensorManager) requireActivity().getSystemService(Context.SENSOR_SERVICE);
                 sm.unregisterListener(this);
             } catch (Exception e) {
-                if (BuildConfig.DEBUG) Logger.log(e);
+                 Logger.log(e);
             }
         }
     }
@@ -323,7 +309,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
 
         Database db = Database.getInstance(getActivity());
 
-        //if (BuildConfig.DEBUG) db.logState();
+        // db.logState();
         // read todays offset
         todayOffset = db.getSteps(Util.getToday());
 
@@ -369,7 +355,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
     }
 
     private void goToStepCounter(SensorEvent event) {
-        if (BuildConfig.DEBUG) Logger.log(
+         Logger.log(
                 "UI - sensorChanged | todayOffset: " + todayOffset + " since boot: " +
                         event.values[0]);
         if (event.values[0] > Integer.MAX_VALUE || event.values[0] == 0) {
@@ -441,13 +427,13 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
 
         float acceleration_diff = Math.abs(last_extrema[current_sign < 0 ? 1 : 0]  /*the opposite*/ - acceleration);
         if (!isAlmostAsLargeAsPreviousOne(acceleration_diff)) {
-            if (BuildConfig.DEBUG) Logger.log("Not as large as previous");
+             Logger.log("Not as large as previous");
             last_acceleration_diff = acceleration_diff;
             return;
         }
 
         if (!wasPreviousLargeEnough(acceleration_diff)) {
-            if (BuildConfig.DEBUG) Logger.log("Previous not large enough");
+             Logger.log("Previous not large enough");
             last_acceleration_diff = acceleration_diff;
             return;
         }
@@ -459,10 +445,10 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
 
             // Ignore steps with more than 180bpm and less than 20bpm
             if (step_time_delta < 60 * 1000 / 180) {
-                if (BuildConfig.DEBUG) Logger.log("Too fast.");
+                 Logger.log("Too fast.");
                 return;
             } else if (step_time_delta > 60 * 1000 / 20) {
-                if (BuildConfig.DEBUG) Logger.log("Too slow.");
+                 Logger.log("Too slow.");
                 last_step_time = current_step_time;
                 valid_steps = 0;
                 return;
@@ -471,7 +457,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
             // check if this occurrence is regular with regard to the step frequency data
             if (!isRegularlyOverTime(step_time_delta)) {
                 last_step_time = current_step_time;
-                if (BuildConfig.DEBUG) Logger.log("Not regularly over time.");
+                 Logger.log("Not regularly over time.");
                 return;
             }
             last_step_time = current_step_time;
@@ -480,7 +466,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
             if (!isRegularlyOverAcceleration(acceleration_diff)) {
                 last_acceleration_value = acceleration;
                 last_acceleration_diff = acceleration_diff;
-                if (BuildConfig.DEBUG)
+                
                     Logger.log("Not regularly over acceleration" + Arrays.toString(mLastStepAccelerationDeltas));
                 valid_steps = 0;
                 return;
@@ -502,7 +488,7 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
                 //updatePie();
             }
             valid_steps++;
-            if (BuildConfig.DEBUG)
+            
                 Logger.log("Detected step. Valid steps = " + valid_steps);
             // count it only if we got more than validStepsThreshold steps
             if (valid_steps > validStepsThreshold) {
@@ -565,11 +551,10 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
      * count to distance.
      */
     private void updatePie() {
-        if (BuildConfig.DEBUG) Logger.log("UI - update steps: " + since_boot);
+         Logger.log("UI - update steps: " + since_boot);
         // todayOffset might still be Integer.MIN_VALUE on first start
         int steps_today = Math.max(todayOffset + since_boot, 0);
         sliceCurrent.setValue(steps_today);
-        segmentBar.setProgress((float) steps_today);
         if (goal - steps_today > 0) {
             // goal not reached yet
             /*if (pg.getData().size() == 1) {

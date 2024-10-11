@@ -16,21 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.R
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.callback.Callback
+import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.databinding.FragmentDigitalBinding
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.model.Speedo
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.AppUtils
-import kotlinx.android.synthetic.main.fragment_digital.*
-import kotlinx.android.synthetic.main.fragment_digital.units_text
-import kotlinx.android.synthetic.main.fragment_digital.view.*
-import kotlinx.android.synthetic.main.fragment_digital.view.car_view
-import kotlinx.android.synthetic.main.fragment_digital.view.cycle_view
-import kotlinx.android.synthetic.main.fragment_digital.view.digi_type_txt
-import kotlinx.android.synthetic.main.fragment_digital.view.popup_units
-import kotlinx.android.synthetic.main.fragment_digital.view.train_view
 
 class DigitalFragment() : Fragment() {
 
     private var mContext: Context? = null
-    private lateinit var mView: View
 
     constructor(context: Context) : this() {
         this.mContext = context
@@ -39,45 +31,42 @@ class DigitalFragment() : Fragment() {
     private var vehicle: String = "car"
     private var unitMain: String = "km"
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_digital, container, false)
+    private var _binding: FragmentDigitalBinding? = null
+    private val binding get() = _binding!!
 
-        view.let {
-            mView = view
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentDigitalBinding.inflate(inflater, container, false)
+
+        defaultSettings(binding.root)
+
+        binding.apply {
+            cycleView.setOnClickListener {
+
+                vehicle = "cycle"
+                Callback.setMeterValue1(Speedo(vehicle, unitMain, unitsText.text.toString(), ""))
+            }
+
+            cycleView.setOnClickListener {
+
+                vehicle = "car"
+                Callback.setMeterValue1(Speedo(vehicle, unitMain, unitsText.text.toString(), ""))
+
+            }
+
+            trainView.setOnClickListener {
+                vehicle = "train"
+                Callback.setMeterValue1(Speedo(vehicle, unitMain, unitsText.text.toString(), ""))
+            }
+
+            popupUnits.setOnClickListener {
+                showPopup(binding.root)
+            }
+
+            Callback.setDefaultSpeedo(true)
         }
+        
 
-        defaultSettings(view)
-
-        view.cycle_view.setOnClickListener {
-
-            vehicle = "cycle"
-            Callback.setMeterValue1(Speedo(vehicle, unitMain, units_text.text.toString(), ""))
-        }
-
-        view.car_view.setOnClickListener {
-
-            vehicle = "car"
-            Callback.setMeterValue1(Speedo(vehicle, unitMain, units_text.text.toString(), ""))
-
-        }
-
-        view.train_view.setOnClickListener {
-
-            vehicle = "train"
-            Callback.setMeterValue1(Speedo(vehicle, unitMain, units_text.text.toString(), ""))
-
-        }
-
-        view.popup_units.setOnClickListener {
-            showPopup(mView)
-        }
-
-        Callback.setDefaultSpeedo(true)
-
-        return view
+        return binding.root
     }
 
     private fun changeVehicleView(view: ImageView, color: Int) {
@@ -96,56 +85,63 @@ class DigitalFragment() : Fragment() {
         val typeface = Typeface.createFromAsset(
             view.context.assets, "fonts/digital.ttf"
         )
-        view.digi_speed_txt.typeface = typeface
-        view.digi_type_txt.typeface = typeface
 
-        val speedObserver = Observer<Location> {
-            getSpeed(it)
-        }
+        binding.apply {
+            digiSpeedTxt.typeface = typeface
+            digiTypeTxt.typeface = typeface
 
-        val meterObserver = Observer<Speedo> {
-            setValues(it, view)
-        }
-
-        val defaultObserver = Observer<Boolean> {
-            if (it) {
-                view.digi_speed_txt.text = "00"
-                digi_type_txt.text = view.resources.getString(R.string.km_h_c)
-                units_text.text = view.resources.getString(R.string.km_h_c)
+            val speedObserver = Observer<Location> {
+                getSpeed(it)
             }
-        }
 
-        Callback.getLocationData().observe(viewLifecycleOwner, speedObserver)
-        Callback.getMeterValue1().observe(viewLifecycleOwner, meterObserver)
-        Callback.getDefaultSpeedoValues().observe(viewLifecycleOwner, defaultObserver)
-        view.units_text.isSelected = true
+            val meterObserver = Observer<Speedo> {
+                setValues(it, view)
+            }
+
+            val defaultObserver = Observer<Boolean> {
+                if (it) {
+                    digiSpeedTxt.text = "00"
+                    digiTypeTxt.text = view.resources.getString(R.string.km_h_c)
+                    unitsText.text = view.resources.getString(R.string.km_h_c)
+                }
+            }
+
+            Callback.getLocationData().observe(viewLifecycleOwner, speedObserver)
+            Callback.getMeterValue1().observe(viewLifecycleOwner, meterObserver)
+            Callback.getDefaultSpeedoValues().observe(viewLifecycleOwner, defaultObserver)
+            unitsText.isSelected = true
+        }
 
     }
 
     private fun setValues(speedo: Speedo, view: View) {
 
-        vehicle = speedo.type
-        unitMain = speedo.unit
-        digi_type_txt.text = speedo.unit_text
-        units_text.text = speedo.unit_text
+        binding.apply {
+            vehicle = speedo.type
+            unitMain = speedo.unit
+            digiTypeTxt.text = speedo.unit_text
+            unitsText.text = speedo.unit_text
 
-        when (speedo.type) {
-            "cycle" -> {
-                changeVehicleView(view.cycle_view, R.color.colorPrimary)
-                changeVehicleView(view.car_view, R.color.black_dark)
-                changeVehicleView(view.train_view, R.color.black_dark)
-            }
-            "car" -> {
-                changeVehicleView(view.cycle_view, R.color.black_dark)
-                changeVehicleView(view.car_view, R.color.colorPrimary)
-                changeVehicleView(view.train_view, R.color.black_dark)
-            }
-            "train" -> {
-                changeVehicleView(view.cycle_view, R.color.black_dark)
-                changeVehicleView(view.car_view, R.color.black_dark)
-                changeVehicleView(view.train_view, R.color.colorPrimary)
+            when (speedo.type) {
+                "cycle" -> {
+                    changeVehicleView(cycleView, R.color.colorPrimary)
+                    changeVehicleView(carView, R.color.black_dark)
+                    changeVehicleView(trainView, R.color.black_dark)
+                }
+                "car" -> {
+                    changeVehicleView(cycleView, R.color.black_dark)
+                    changeVehicleView(carView, R.color.colorPrimary)
+                    changeVehicleView(trainView, R.color.black_dark)
+                }
+                "train" -> {
+                    changeVehicleView(cycleView, R.color.black_dark)
+                    changeVehicleView(carView, R.color.black_dark)
+                    changeVehicleView(trainView, R.color.colorPrimary)
+                }
             }
         }
+
+
 
     }
 
@@ -157,15 +153,15 @@ class DigitalFragment() : Fragment() {
         when (unitMain) {
 
             "km" -> {
-                digi_speed_txt.text = AppUtils.roundOneDecimal(((it.speed * 3600 ) / 1000).toDouble()).toString()
+                binding.digiSpeedTxt.text = AppUtils.roundOneDecimal(((it.speed * 3600 ) / 1000).toDouble()).toString()
             }
 
             "mph" -> {
-                digi_speed_txt.text = AppUtils.roundOneDecimal(((it.speed * 2.2369))).toString()
+                binding.digiSpeedTxt.text = AppUtils.roundOneDecimal(((it.speed * 2.2369))).toString()
             }
 
             "knot" -> {
-                digi_speed_txt.text = AppUtils.roundOneDecimal(((it.speed * 1.94384))).toString()
+                binding.digiSpeedTxt.text = AppUtils.roundOneDecimal(((it.speed * 1.94384))).toString()
             }
 
         }
@@ -174,7 +170,7 @@ class DigitalFragment() : Fragment() {
     private fun showPopup(view: View) {
 
         mContext?.let {
-            val popup = PopupMenu(it, view.popup_units)
+            val popup = PopupMenu(it, binding.popupUnits)
             popup.menuInflater.inflate(R.menu.units_popup_menu, popup.menu)
 
             popup.setOnMenuItemClickListener {

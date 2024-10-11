@@ -26,6 +26,8 @@ import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.AppU
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Logger;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Util;
 
+import org.eazegraph.lib.BuildConfig;
+
 public class ShutdownRecevier extends BroadcastReceiver {
 
     @Override
