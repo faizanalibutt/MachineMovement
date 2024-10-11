@@ -13,9 +13,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.PictureInPictureActivity
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.R
-import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.app.App
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.databinding.ActivityMainBinding
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.AppUtils
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Utility
@@ -63,7 +61,7 @@ class MainActivity :
         val menuViewItemLan: MenuItem = menuView.getItem(1)
         val menuViewItemPro: MenuItem = menuView.getItem(0)
         val selectLan = menuViewItemLan.actionView?.findViewById<AppCompatTextView>(R.id.select_languague)
-        selectLan?.text = Utility.setLanguageLocale()
+
         selectLan?.isSelected = true
         menuViewItemLan.actionView?.findViewById<AppCompatTextView>(R.id.nav_language_text)
             ?.isSelected = true
@@ -128,7 +126,7 @@ class MainActivity :
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+
             R.id.nav_share -> shareIntent()
             R.id.nav_privacy -> {
                 val url = getString(R.string.privacy_policy_link_text)
@@ -136,9 +134,7 @@ class MainActivity :
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(this, Uri.parse(url))
             }
-            R.id.nav_language -> {
-                Utility.showLanguageDialog(this@MainActivity)
-            }
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -147,10 +143,8 @@ class MainActivity :
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.nav_menu -> drawerLayout.openDrawer(GravityCompat.START, true)
-            R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+
             R.id.action_share -> shareIntent()
-            R.id.premium_services ->
-                startActivity(Intent(this, PictureInPictureActivity::class.java))
         }
     }
 

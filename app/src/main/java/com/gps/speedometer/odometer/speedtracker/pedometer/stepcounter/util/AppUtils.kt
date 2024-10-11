@@ -8,12 +8,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.R
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.activity.Activity
-import timber.log.Timber
 import kotlin.math.roundToInt
 
 object AppUtils {
@@ -71,7 +71,7 @@ object AppUtils {
             intent.data = uri
             startActivityForResult(intent, 101)
         }.onFailure {
-            Timber.e("couldn't find pip_settings to go.")
+            Log.e("failure", "couldn't find pip_settings to go.")
         }
     }
 

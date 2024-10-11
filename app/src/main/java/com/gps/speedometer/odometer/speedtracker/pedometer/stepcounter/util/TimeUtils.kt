@@ -22,7 +22,7 @@ object TimeUtils {
         return if (type == "time")
             SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(millis))
         else
-            SimpleDateFormat("yyyy-MM-dd", Locale(App.localeManager!!.language)).format(Date(millis))
+            "SimpleDateFormat(ocale(App.localeManager!!.language)).format(Date(millis))"
     }
 
     fun getFormatDate(millis: Long): String {
@@ -30,18 +30,7 @@ object TimeUtils {
         return SimpleDateFormat("E", Locale.getDefault()).format(Date(millis)).toString()
     }
 
-    @JvmStatic
-    fun getFormatStringDate(stringDate: String) : String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale(App.localeManager!!.language))
-        var date: Date? = null
-        try {
-            date = sdf.parse(stringDate)
-        } catch (parseExp: ParseException) {
-            Logger.log(parseExp.localizedMessage)
-        }
-        sdf.applyPattern("EEE")
-        return sdf.format(date!!).toString()
-    }
+
 
     fun getFormatedTimeMH(millis: Long): String = String.format(
         "%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),

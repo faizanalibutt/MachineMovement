@@ -18,10 +18,10 @@ package com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util;
 
 import android.database.Cursor;
 
+import org.eazegraph.lib.BuildConfig;
+
 import java.io.FileWriter;
 import java.util.Date;
-
-import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.BuildConfig;
 
 public abstract class Logger {
 

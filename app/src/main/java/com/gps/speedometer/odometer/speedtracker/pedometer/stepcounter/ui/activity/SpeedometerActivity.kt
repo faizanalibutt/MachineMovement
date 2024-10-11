@@ -3,33 +3,27 @@ package com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.activ
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActivityManager
-import android.app.AlertDialog
 import android.app.PictureInPictureParams
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Point
 import android.location.Location
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.util.Rational
-import android.view.ContextThemeWrapper
 import android.view.Display
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
-import com.dev.bytes.adsmanager.*
 import com.google.android.material.tabs.TabLayout
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.Database
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.R
-import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.app.App
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.callback.Callback
+import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.databinding.ActivitySpeedometerBinding
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.model.Distance
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.model.Speedo
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.ui.ViewPagerAdapter
@@ -41,15 +35,7 @@ import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.AppU
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.BackgroundPlayService
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.CurrentLocation
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.TimeUtils
-import com.nabinbhandari.android.permissions.PermissionHandler
-import com.nabinbhandari.android.permissions.Permissions
-import kotlinx.android.synthetic.main.activity_pedometer.*
-import kotlinx.android.synthetic.main.activity_speedometer.*
-import kotlinx.android.synthetic.main.activity_speedometer.nav_back
-import kotlinx.android.synthetic.main.activity_speedometer.tabView
-import kotlinx.android.synthetic.main.activity_speedometer.viewPager
-import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
+import java.util.Calendar
 import kotlin.math.max
 
 class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
@@ -74,16 +60,17 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
     private var mCurrentLocation: Location? = null
     var lStart: Location? = null
     var lEnd: Location? = null
-    var startStopInterstitialAd: InterAdPair? = null
-    var backInterstitialAd: InterAdPair? = null
     var unitType = "km"
 
     var mViewModel: SpeedViewModel? = null
     var speedObj: Speedo? = null
 
+    private lateinit var binding: ActivitySpeedometerBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_speedometer)
+        binding = ActivitySpeedometerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (!AppUtils.getBuildVersion())
             stopService(Intent(this, BackgroundPlayService::class.java))
@@ -92,87 +79,65 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
             .get(SpeedViewModel::class.java)//ViewModelProvider(this).get(SpeedViewModel::class.java)
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(
-            AnalogFragment(this@SpeedometerActivity),
-            getString(R.string.text_analog)
-        )
+
         adapter.addFragment(
             DigitalFragment(this@SpeedometerActivity),
             getString(R.string.text_digital)
         )
-        adapter.addFragment(MapFragment(this@SpeedometerActivity), getString(R.string.text_tab_map))
-        viewPager.offscreenPageLimit = 2
-        viewPager.adapter = adapter
-        tabView.setupWithViewPager(viewPager)
-        text4.isSelected = true
-        actionBarText.isSelected = true
 
-        ad_container_speedo.loadBannerAd(BannerPlacements.BANNER_AD)
-        loadInterstitialAd(
-            ADUnitPlacements.SPEEDO_START_STOP_INTERSTITIAL,
-            onLoaded = { startStopInterstitialAd = it },
-            reloadOnClosed = true
-        )
-        loadInterstitialAd(
-            ADUnitPlacements.SPEEDO_BACK_INTERSTITIAL,
-            onLoaded = { backInterstitialAd = it })
+        binding.apply {
+            viewPager.offscreenPageLimit = 2
+            viewPager.adapter = adapter
+            tabView.setupWithViewPager(viewPager)
+            text4.isSelected = true
+            actionBarText.isSelected = true
 
-        nav_back.setOnClickListener {
-            onBackPressed()
-        }
-
-        /*premium_services.setOnClickListener {
-            App.bp?.purchaseRemoveAds(this)
-        }
-
-        if (TinyDB.getInstance(this).getBoolean(getString(com.dev.bytes.R.string.is_premium)))
-            premium_services.visibility = View.GONE
-        else
-            AppUtils.animateProButton(this, premium_services)*/
-
-        speedo_graph.setOnClickListener {
-            startActivity(Intent(this, SpeedoGraphActivity::class.java))
-        }
-
-        currentLocation = CurrentLocation(this)
-
-        start_btn.setOnClickListener(::startStopBtn)
-
-        tabView.setupWithViewPager(viewPager)
-        tabView.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
+            navBack.setOnClickListener {
+                onBackPressed()
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-            }
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> {
-                        start_btn_group.visibility = View.VISIBLE
-                        actionBarText.text = getString(R.string.analog_meter)
-                        ad_container_speedo_map.visibility = View.VISIBLE
-                    }
-                    1 -> {
-                        start_btn_group.visibility = View.VISIBLE
-                        actionBarText.text = getString(R.string.digital_meter)
-                        ad_container_speedo_map.visibility = View.VISIBLE
-                    }
-                    2 -> {
-                        start_btn_group.visibility = View.GONE
-                        actionBarText.text = getString(R.string.text_map)
-                        ad_container_speedo_map.visibility = View.GONE
-                    }
-                    else -> {
+            currentLocation = CurrentLocation(this@SpeedometerActivity)
+
+            startBtn.setOnClickListener(::startStopBtn)
+
+            tabView.setupWithViewPager(viewPager)
+            tabView.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> {
+                            startBtnGroup.visibility = View.VISIBLE
+                            actionBarText.text = getString(R.string.analog_meter)
+                        }
+                        1 -> {
+                            startBtnGroup.visibility = View.VISIBLE
+                            actionBarText.text = getString(R.string.digital_meter)
+
+                        }
+                        2 -> {
+                            startBtnGroup.visibility = View.GONE
+                            actionBarText.text = getString(R.string.text_map)
+
+                        }
+                        else -> {
+                        }
                     }
                 }
-            }
 
-        })
-        actionBarText.text = getString(R.string.analog_meter)
+            })
+            actionBarText.text = getString(R.string.analog_meter)
+        }
+
 
         Callback.getMeterValue1().observe(this, {
             it.apply {
@@ -184,99 +149,80 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
 
     fun startStopBtn(v: View) {
 
-        if (start_btn_txt.text == getString(R.string.text_start_now)) {
+        binding.apply {
+            if (startBtnTxt.text == getString(R.string.text_start_now)) {
 
-            isStop = false
+                isStop = false
 
-            speed_value.text = "0"
-            distance_value.text = "0"
-            speedObj?.let {
-                Callback.setMeterValue1(it)
-            }
-            getDefaultPreferences(this).edit().putBoolean("speedo_overlay", true).apply()
+                speedValue.text = "0"
+                distanceValue.text = "0"
+                speedObj?.let {
+                    Callback.setMeterValue1(it)
+                }
+                getDefaultPreferences(this@SpeedometerActivity).edit().putBoolean("speedo_overlay", true).apply()
 
-            val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-            val rationale = getString(R.string.text_location_permission)
-            val options = Permissions.Options().setRationaleDialogTitle("Info")
-                .setSettingsDialogTitle(getString(R.string.text_warning))
+                if (ContextCompat.checkSelfPermission(this@SpeedometerActivity, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                    //loading_layout.visibility = View.VISIBLE
+                    val btnText = getString(R.string.text_stop)
+                    startBtnTxt.text = btnText
+                    mViewModel?.startStopBtnState?.postValue(btnText)
+                    startBtn.background = ContextCompat.getDrawable(
+                        this@SpeedometerActivity,
+                        R.drawable.background_stop_btn
+                    )
+                    startTime = Calendar.getInstance().timeInMillis
+                    timerThread()
 
-            Permissions.check(
-                this,
-                permissions,
-                rationale,
-                options,
-                object : PermissionHandler() {
+                    currentLocation?.getLocation(this@SpeedometerActivity)
 
-                    override fun onGranted() {
+                }
 
-                        //loading_layout.visibility = View.VISIBLE
-                        val btnText = getString(R.string.text_stop)
-                        start_btn_txt.text = btnText
-                        mViewModel?.startStopBtnState?.postValue(btnText)
-                        start_btn.background = ContextCompat.getDrawable(
-                            this@SpeedometerActivity,
-                            R.drawable.background_stop_btn
-                        )
-                        startTime = Calendar.getInstance().timeInMillis
-                        timerThread()
+            } else {
 
-                        currentLocation?.getLocation(this@SpeedometerActivity)
-                        showStartStopInter()
+                val btnText = getString(R.string.text_start_now)
+                startBtnTxt.text = btnText
+                mViewModel?.startStopBtnState?.postValue(btnText)
+                speedValue.text = "0"
+                distanceValue.text = "0"
+                timeValues.text = "00:00"
+                getDefaultPreferences(this@SpeedometerActivity)
+                    .edit().putBoolean("speedo_overlay", false).apply()
 
-                    }
-                })
+                startBtn.background = ContextCompat.getDrawable(
+                    this@SpeedometerActivity, R.drawable.background_start_btn
+                )
 
-        } else {
+                updateTimerThread?.let { handler?.removeCallbacks(it) }
+                currentLocation?.removeFusedLocationClient()
+                val db = Database.getInstance(this@SpeedometerActivity)
+                endTime = System.currentTimeMillis()
+                val date = TimeUtils.getFormatDateTime(endTime, "date")
+                val distanceObj =
+                    Distance(startTime, endTime, avgSpeedInDB, distanceInDB, date, totalTime)
+                db.saveInterval(distanceObj)
+                isStop = true
+                totalTime = 0
+                endTime = 0
+                paused = false
+                mCurrentLocation = null
+                lStart = null
+                lEnd = null
+                distance = 0.0
+                distanceInDB = 0.0
+                maxSpeedInDB = 0.0
+                avgSpeedInDB = 0.0
+                maxSpeed = 0.0
+                avgSpeed = 0.0
 
-            val btnText = getString(R.string.text_start_now)
-            start_btn_txt.text = btnText
-            mViewModel?.startStopBtnState?.postValue(btnText)
-            speed_value.text = "0"
-            distance_value.text = "0"
-            time_values.text = "00:00"
-            getDefaultPreferences(this).edit().putBoolean("speedo_overlay", false).apply()
+                Callback.setDefaultSpeedo(true)
+                speedObj?.let {
+                    Callback.setMeterValue1(it)
+                }
 
-            start_btn.background = ContextCompat.getDrawable(
-                this,
-                R.drawable.background_start_btn
-            )
-
-            updateTimerThread?.let { handler?.removeCallbacks(it) }
-            currentLocation?.removeFusedLocationClient()
-            val db = Database.getInstance(this)
-            endTime = System.currentTimeMillis()
-            val date = TimeUtils.getFormatDateTime(endTime, "date")
-            val distanceObj =
-                Distance(startTime, endTime, avgSpeedInDB, distanceInDB, date, totalTime)
-            db.saveInterval(distanceObj)
-            isStop = true
-            totalTime = 0
-            endTime = 0
-            paused = false
-            mCurrentLocation = null
-            lStart = null
-            lEnd = null
-            distance = 0.0
-            distanceInDB = 0.0
-            maxSpeedInDB = 0.0
-            avgSpeedInDB = 0.0
-            maxSpeed = 0.0
-            avgSpeed = 0.0
-            showStartStopInter()
-            Callback.setDefaultSpeedo(true)
-            //Callback.setMeterValue1(Speedo("car", "km", resources.getString(R.string.km_h_c), ""))
-            speedObj?.let {
-                Callback.setMeterValue1(it)
             }
         }
 
-    }
-
-    fun showStartStopInter() {
-        startStopInterstitialAd?.apply {
-            if (this.isLoaded()) this.showAd(this@SpeedometerActivity, true)
-                .let { isStartStopShown = it }
-        }
     }
 
     override fun gotLocation(locale: Location) {
@@ -294,7 +240,7 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
 
             override fun run() {
                 totalTime = System.currentTimeMillis() - startTime
-                time_values.text = TimeUtils.getDurationSpeedo(totalTime)
+                binding.timeValues.text = TimeUtils.getDurationSpeedo(totalTime)
                 handler!!.postDelayed(this, 1000)
             }
         }
@@ -356,54 +302,43 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
 
         if (lStart != null && lEnd != null) {
 
-            distanceInDB += (lStart!!.distanceTo(lEnd).toDouble() / 1000.0)
+            distanceInDB += (lStart!!.distanceTo(lEnd!!).toDouble() / 1000.0)
 
-            when (unitType) {
+            binding.apply {
+                when (unitType) {
 
-                "km" -> {
-                    distance += (lStart!!.distanceTo(lEnd).toDouble() / 1000.0)
-                    avgSpeed = (speed + maxSpeed) / 2
-                    speed_value.text = "${AppUtils.roundTwoDecimal(avgSpeed)} km"
-                    distance_value.text = "${AppUtils.roundTwoDecimal(distance)} km"
-                    pip_unit.text = "kmh"
-                    pip_speed.text = "${speed.toInt()}"
-                }
-                "mph" -> {
-                    distance += (lStart!!.distanceTo(lEnd).toDouble() / 1609.34)
-                    avgSpeed = (speed + maxSpeed) / 2
-                    speed_value.text = "${AppUtils.roundTwoDecimal(avgSpeed)} mph"
-                    distance_value.text = "${AppUtils.roundTwoDecimal(distance)} mph"
-                    pip_unit.text = "mph"
-                    pip_speed.text = "${speed.toInt()}"
-                }
-                "knot" -> {
-                    distance += (lStart!!.distanceTo(lEnd).toDouble() / 1852)
-                    avgSpeed = (speed + maxSpeed) / 2
-                    speed_value.text = "${AppUtils.roundTwoDecimal(avgSpeed)} knot"
-                    distance_value.text = "${AppUtils.roundTwoDecimal(distance)} knot"
-                    pip_unit.text = "knot"
-                    pip_speed.text = "${speed.toInt()}"
-                }
+                    "km" -> {
+                        distance += (lStart!!.distanceTo(lEnd!!).toDouble() / 1000.0)
+                        avgSpeed = (speed + maxSpeed) / 2
+                        speedValue.text = "${AppUtils.roundTwoDecimal(avgSpeed)} km"
+                        distanceValue.text = "${AppUtils.roundTwoDecimal(distance)} km"
+                        pipUnit.text = "kmh"
+                        pipSpeed.text = "${speed.toInt()}"
+                    }
+                    "mph" -> {
+                        distance += (lStart!!.distanceTo(lEnd!!).toDouble() / 1609.34)
+                        avgSpeed = (speed + maxSpeed) / 2
+                        speedValue.text = "${AppUtils.roundTwoDecimal(avgSpeed)} mph"
+                        distanceValue.text = "${AppUtils.roundTwoDecimal(distance)} mph"
+                        pipUnit.text = "mph"
+                        pipSpeed.text = "${speed.toInt()}"
+                    }
+                    "knot" -> {
+                        distance += (lStart!!.distanceTo(lEnd!!).toDouble() / 1852)
+                        avgSpeed = (speed + maxSpeed) / 2
+                        speedValue.text = "${AppUtils.roundTwoDecimal(avgSpeed)} knot"
+                        distanceValue.text = "${AppUtils.roundTwoDecimal(distance)} knot"
+                        pipUnit.text = "knot"
+                        pipSpeed.text = "${speed.toInt()}"
+                    }
 
+                }
             }
 
         }
 
     }
 
-    override fun onPictureInPictureModeChanged(
-        isInPictureInPictureMode: Boolean,
-        newConfig: Configuration?
-    ) {
-        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
-        if (isInPictureInPictureMode) {
-            speedo_view_container.visibility = View.GONE
-            pip_mode.visibility = View.VISIBLE
-        } else {
-            speedo_view_container.visibility = View.VISIBLE
-            pip_mode.visibility = View.GONE
-        }
-    }
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
@@ -447,7 +382,7 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                             this
                         )
                     )
-                        showOpenPermDialog()
+
                     else {
                         startService(
                             Intent(
@@ -461,31 +396,8 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
             }
     }
 
-    var mOpenPermDialog: AlertDialog? = null
-    var mProcessDialog: AlertDialog? = null
-    private var isOverlay = false
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun showOpenPermDialog() {
-        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Dialog))
-        builder.setTitle(R.string.dialog_title_overlay)
-        builder.setMessage(R.string.dialog_desc_overlay)
-        builder.setPositiveButton(R.string.butn_start,
-            DialogInterface.OnClickListener { dialogInterface, i ->
-                val intent = Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:$packageName")
-                )
-                startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE)
-                isOverlay = false
-                mOpenPermDialog?.dismiss()
-            })
-        builder.setNegativeButton(R.string.butn_cancel, null)
-        if (mOpenPermDialog == null)
-            mOpenPermDialog = builder.create()
-        if (mOpenPermDialog != null && mOpenPermDialog?.isShowing == false)
-            mOpenPermDialog?.show()
-    }
+    private var isOverlay = false
 
     fun checkServiceRunning(serviceClass: Class<*> = BackgroundPlayService::class.java): Boolean {
         val manager: ActivityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
@@ -503,45 +415,14 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
         handler?.removeCallbacks(updateTimerThread!!)
         AppUtils.unit = "km"
         AppUtils.type = "cycle"
-        mProcessDialog = null
-        mOpenPermDialog = null
         if (checkServiceRunning())
             stopService(Intent(this, BackgroundPlayService::class.java))
         getDefaultPreferences(this).edit().putBoolean("speedo_overlay", false).apply()
     }
 
-    override fun onBackPressed() {
-        //super.onBackPressed()
-        showProcessDialog()
-    }
-
-    private fun showProcessDialog() {
-        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.Theme_AppCompat_Dialog))
-        builder.setTitle(R.string.dialog_title_exit)
-        builder.setMessage(R.string.dialog_desc_exit)
-        builder.setPositiveButton(R.string.close,
-            DialogInterface.OnClickListener { dialogInterface, i ->
-                mProcessDialog?.dismiss()
-                finish()
-                backInterstitialAd?.apply {
-                    if (this.isLoaded() && !isStartStopShown)
-                        this.showAd(this@SpeedometerActivity)
-                }
-                if (!AppUtils.getBuildVersion())
-                    stopService(Intent(this, BackgroundPlayService::class.java))
-            })
-        builder.setNegativeButton(R.string.butn_cancel, null)
-        if (mProcessDialog == null)
-            mProcessDialog = builder.create()
-        if (mProcessDialog != null && mProcessDialog?.isShowing == false)
-            mProcessDialog?.show()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if ((App.bp?.handleActivityResult(requestCode, resultCode, data)) != true)
-            super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == CurrentLocation.REQUEST_LOCATION) {
             if (resultCode == android.app.Activity.RESULT_OK) {
@@ -553,10 +434,10 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                     this, getString(R.string.text_enable_gps), Toast.LENGTH_SHORT
                 ).show()
                 val btnText = getString(R.string.text_start_now)
-                start_btn_txt.text = btnText
+                binding.startBtnTxt.text = btnText
                 mViewModel?.startStopBtnState?.postValue(btnText)
 
-                start_btn.background = ContextCompat.getDrawable(
+                binding.startBtn.background = ContextCompat.getDrawable(
                     this,
                     R.drawable.background_start_btn
                 )
@@ -586,10 +467,9 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                 } else {
                     startService(Intent(this, BackgroundPlayService::class.java).setAction("pedo"))
                     isOverlay = true
-                    mOpenPermDialog?.dismiss()
                 }
             } else if (resultCode == android.app.Activity.RESULT_CANCELED) {
-                mOpenPermDialog?.dismiss()
+
             }
         }
     }

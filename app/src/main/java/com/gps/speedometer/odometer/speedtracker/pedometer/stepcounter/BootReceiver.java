@@ -26,6 +26,8 @@ import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.API2
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.AppUtils;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Logger;
 
+import org.eazegraph.lib.BuildConfig;
+
 public class BootReceiver extends BroadcastReceiver {
 
     @Override

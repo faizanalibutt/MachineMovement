@@ -32,6 +32,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -44,13 +45,13 @@ import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.AppU
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Logger;
 import com.gps.speedometer.odometer.speedtracker.pedometer.stepcounter.util.Util;
 
+import org.eazegraph.lib.BuildConfig;
+
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.FormatFlagsConversionMismatchException;
 import java.util.Locale;
-
-import timber.log.Timber;
 
 /**
  * Background service which keeps the step-sensor listener alive to always get
@@ -236,7 +237,7 @@ public class SensorListener extends Service implements SensorEventListener {
                             format.format(today_offset + steps) + " " + context.getString(R.string.steps));
                     AppUtils.INSTANCE.getDefaultPreferences(SensorListener.this).edit()
                             .putInt("pedo_service_value", today_offset + steps).apply();
-                    Timber.e("sensor is acdel");
+                    Log.e("error","sensor is acdel");
                 } else {
                     if (today_offset == Integer.MIN_VALUE) today_offset = -steps;
                     NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
@@ -249,7 +250,7 @@ public class SensorListener extends Service implements SensorEventListener {
                             format.format(today_offset + steps) + " " + context.getString(R.string.steps));
                     AppUtils.INSTANCE.getDefaultPreferences(SensorListener.this).edit()
                             .putInt("pedo_service_value", today_offset + steps).apply();
-                    Timber.e("sensor is step");
+                    Log.e("error","sensor is step");
                 }
             } catch (NumberFormatException | FormatFlagsConversionMismatchException | IllegalStateException e) {
                 e.printStackTrace();
@@ -263,7 +264,7 @@ public class SensorListener extends Service implements SensorEventListener {
         notificationBuilder.setPriority(Notification.PRIORITY_MIN).setShowWhen(false)
                 .setContentIntent(PendingIntent
                         .getActivity(context, 0, new Intent(context, PedometerActivity.class),
-                                PendingIntent.FLAG_UPDATE_CURRENT))
+                                Build.VERSION.SDK_INT == 31 ? PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT))
                 .setSmallIcon(R.drawable.ic_notification).setOngoing(true);
         return notificationBuilder.build();
     }
