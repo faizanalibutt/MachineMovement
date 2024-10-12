@@ -129,10 +129,24 @@
             android:fontFamily="@font/roboto_medium"
             android:text="@string/text_start_now"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/start_btn"
+            app:layout_constraintBottom_toTopOf="@+id/gps_bar"
             app:layout_constraintEnd_toEndOf="@+id/start_btn"
             app:layout_constraintStart_toStartOf="@+id/start_btn"
             app:layout_constraintTop_toTopOf="@+id/start_btn"
+            app:layout_constraintVertical_bias="0.50" />
+
+        <TextView
+            android:id="@+id/gps_bar"
+            style="@style/TextAppearance.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="zero accuracy"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/start_btn"
+            app:layout_constraintEnd_toEndOf="@+id/start_btn"
+            app:layout_constraintStart_toStartOf="@+id/start_btn"
+            app:layout_constraintTop_toBottomOf="@+id/start_btn_txt"
             app:layout_constraintVertical_bias="0.50" />
 
         <androidx.constraintlayout.widget.Group

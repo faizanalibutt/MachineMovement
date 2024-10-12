@@ -170,9 +170,6 @@ object TimeUtils {
                 string.append("00")
         }
 
-        /*if (hours > 0)
-            string.append(" hr")
-        else*/
         string.append("min")
 
         return string.toString()

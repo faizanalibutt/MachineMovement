@@ -6,13 +6,13 @@ import android.app.ActivityManager
 import android.app.PictureInPictureParams
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.graphics.Point
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.util.Rational
 import android.view.Display
 import android.view.View
@@ -65,6 +65,8 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
     var mViewModel: SpeedViewModel? = null
     var speedObj: Speedo? = null
 
+    private var isOverlay = false
+
     private lateinit var binding: ActivitySpeedometerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,8 +98,6 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                 onBackPressed()
             }
 
-
-
             currentLocation = CurrentLocation(this@SpeedometerActivity)
 
             startBtn.setOnClickListener(::startStopBtn)
@@ -119,16 +119,19 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                             startBtnGroup.visibility = View.VISIBLE
                             actionBarText.text = getString(R.string.analog_meter)
                         }
+
                         1 -> {
                             startBtnGroup.visibility = View.VISIBLE
                             actionBarText.text = getString(R.string.digital_meter)
 
                         }
+
                         2 -> {
                             startBtnGroup.visibility = View.GONE
                             actionBarText.text = getString(R.string.text_map)
 
                         }
+
                         else -> {
                         }
                     }
@@ -159,10 +162,15 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                 speedObj?.let {
                     Callback.setMeterValue1(it)
                 }
-                getDefaultPreferences(this@SpeedometerActivity).edit().putBoolean("speedo_overlay", true).apply()
+                getDefaultPreferences(this@SpeedometerActivity).edit()
+                    .putBoolean("speedo_overlay", true).apply()
 
-                if (ContextCompat.checkSelfPermission(this@SpeedometerActivity, Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this@SpeedometerActivity,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
                     //loading_layout.visibility = View.VISIBLE
                     val btnText = getString(R.string.text_stop)
                     startBtnTxt.text = btnText
@@ -226,11 +234,15 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
     }
 
     override fun gotLocation(locale: Location) {
-        //loading_layout.visibility = View.GONE
         if (!isStop) {
             getSpeed(locale)
         }
     }
+
+    override fun getGpsStrength(averageSnr: String) {
+        binding.gpsBar.setText(averageSnr)
+    }
+
 
     private fun timerThread() {
 
@@ -257,9 +269,11 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
             "km" -> {
                 speed = (it.speed * 3600) / 1000.toDouble()
             }
+
             "mph" -> {
                 speed = it.speed * 2.2369
             }
+
             "knot" -> {
                 speed = it.speed * 1.94384
             }
@@ -294,19 +308,15 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
             lEnd?.longitude = mCurrentLocation!!.longitude
         }
 
-        updateUi()
+        updateUi(it)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateUi() {
-
+    private fun updateUi(location: Location) {
         if (lStart != null && lEnd != null) {
-
             distanceInDB += (lStart!!.distanceTo(lEnd!!).toDouble() / 1000.0)
-
             binding.apply {
                 when (unitType) {
-
                     "km" -> {
                         distance += (lStart!!.distanceTo(lEnd!!).toDouble() / 1000.0)
                         avgSpeed = (speed + maxSpeed) / 2
@@ -314,6 +324,9 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                         distanceValue.text = "${AppUtils.roundTwoDecimal(distance)} km"
                         pipUnit.text = "kmh"
                         pipSpeed.text = "${speed.toInt()}"
+                        Log.w("My-Speed", "Speed Details: " +
+                                "distance ${speedValue.text} , average speed ${distanceValue.text}, pipSpeed ${pipSpeed.text}" +
+                                " gps accuracy ${location.accuracy}")
                     }
                     "mph" -> {
                         distance += (lStart!!.distanceTo(lEnd!!).toDouble() / 1609.34)
@@ -331,14 +344,10 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                         pipUnit.text = "knot"
                         pipSpeed.text = "${speed.toInt()}"
                     }
-
                 }
             }
-
         }
-
     }
-
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
@@ -348,13 +357,13 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
         )
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
                 if (!isInPictureInPictureMode
-                    && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)) {
+                    && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
+                ) {
                     val d: Display = windowManager.defaultDisplay
                     val p = Point()
                     d.getSize(p)
                     val width: Int = p.x
                     val height: Int = p.y
-
                     val ratio = Rational(width, height)
                     val pip_Builder: PictureInPictureParams.Builder =
                         PictureInPictureParams.Builder()
@@ -368,9 +377,7 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                     ).show()
             } else {
                 if (!checkServiceRunning(BackgroundPlayService::class.java)) {
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
-                        && Settings.canDrawOverlays(this)
-                    ) {
+                    if (Settings.canDrawOverlays(this)) {
                         startService(
                             Intent(
                                 this,
@@ -378,12 +385,9 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                             ).setAction("speedo")
                         )
                         isOverlay = true
-                    } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1 && !Settings.canDrawOverlays(
-                            this
-                        )
-                    )
-
-                    else {
+                    } else if (!Settings.canDrawOverlays(this)) {
+                      // stop service
+                    } else {
                         startService(
                             Intent(
                                 this,
@@ -395,9 +399,6 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                 }
             }
     }
-
-
-    private var isOverlay = false
 
     fun checkServiceRunning(serviceClass: Class<*> = BackgroundPlayService::class.java): Boolean {
         val manager: ActivityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
@@ -459,9 +460,7 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
             }
         } else if (requestCode == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE) {
             if (resultCode == android.app.Activity.RESULT_OK) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                    && !Settings.canDrawOverlays(this)
-                ) {
+                if (!Settings.canDrawOverlays(this)) {
                     Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show()
                     isOverlay = false
                 } else {
@@ -469,7 +468,8 @@ class SpeedometerActivity : Activity(), CurrentLocation.LocationResultListener {
                     isOverlay = true
                 }
             } else if (resultCode == android.app.Activity.RESULT_CANCELED) {
-
+                // do nothing and wait
+                val i = 0
             }
         }
     }

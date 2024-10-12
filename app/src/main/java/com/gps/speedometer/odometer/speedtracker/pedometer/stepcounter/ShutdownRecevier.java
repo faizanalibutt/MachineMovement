@@ -32,7 +32,10 @@ public class ShutdownRecevier extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        if (BuildConfig.DEBUG) Logger.log("shutting down");
+        if (BuildConfig.DEBUG) {
+            Logger.log("shutting down");
+            return;
+        }
 
         String service = AppUtils.INSTANCE.getDefaultPreferences
                 (context).getString("pedo_state", "start");

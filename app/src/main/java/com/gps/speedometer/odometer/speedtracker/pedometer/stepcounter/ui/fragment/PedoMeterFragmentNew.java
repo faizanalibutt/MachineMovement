@@ -234,11 +234,11 @@ public class PedoMeterFragmentNew extends Fragment implements SensorEventListene
     }
 
     private void startService(View v, boolean start) {
-        if (start)
-            v.getContext().startService(new Intent(getActivity(), SensorListener.class));
-        else {
-            v.getContext().stopService(new Intent(getActivity(), SensorListener.class));
-        }
+//        if (start)
+//            v.getContext().startService(new Intent(getActivity(), SensorListener.class));
+//        else {
+//            v.getContext().stopService(new Intent(getActivity(), SensorListener.class));
+//        }
     }
 
     public void setUpListener(boolean option) {
